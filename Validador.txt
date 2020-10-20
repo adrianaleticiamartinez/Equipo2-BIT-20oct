@@ -1,0 +1,96 @@
+***********************************************************
+package com.example.demo.model;
+
+public class Utils {
+	public static void main(String[] args) {
+		
+	/*pulic Person getPerson(String id) {
+			return persons.stream().filter(p -> p.getId().equals(id)).findFirst().get();
+		}*/
+	}
+		//System.out.print(ofuscar("Prueba BBVA"));
+		//Parte SQL donde busca por ID
+		//Almacenar en Client
+		// El Client lo va a buscar  y lo va a encriptar  el ofuscardor
+		
+		String apellidoPaterno = Utils.ofuscar(client.getapellidoPaterno);
+		String apellidoMaterno = Utils.ofuscar(client.getapellidoMaterno);
+		Date fechaNacimiento = Utils.ofuscar(client.fechaNacimiento);
+		String nacionalidad = Utils.ofuscar(client.nacionalidad);
+		String rfc = Utils.ofuscar(client.rfc);
+		String tipoID = Utils.ofuscar(client.tipoID);
+		String numeroID = Utils.ofuscar(client.numero);
+		String email = Utils.ofuscar(client.email);
+		//
+	}
+
+public static String ofuscar(String original) {
+	StringBuilder sb = new StringBuilder();
+	
+	
+	int longitud = original.length();
+	
+	sb.append(original.substring(0, 3));
+	for (int i = 3; i < longitud; i++) {
+		sb.append("*");
+	}
+	return sb.toString();
+}
+
+}
+
+*****************************************************
+
+
+package com.example.demo.service;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.example.demo.model.Person;
+
+@Service
+public class PersonService {
+	//private List<Person> persons = Arrays.asList(new Person("1", "Fer", "De la Cruz", 24),
+		//	new Person("2", "DDD", "De la Cruz", 21));
+	private List<Person> persons = Arrays.asList(new Person(Select * FROM ));
+	public List<Person> getPersons() {
+		return persons;
+	} 
+	
+	public Person getPerson(String id) {
+		return persons.stream().filter(p -> p.getId().equals(id)).findFirst().get();
+	}
+}
+**********************************************************************
+
+package com.example.demo.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.model.Person;
+import com.example.demo.service.PersonService;
+
+@RestController
+public class PersonController {
+	@Autowired
+	private PersonService personService;
+	
+	/*@GetMapping("/persons")
+	public List<Person> getPersons() {
+		//return Arrays.asList(new Person("1", "Fer", "De la Cruz", 24));
+		return personService.getPersons();
+	}*/
+	
+	@GetMapping("/persons/{id}")
+	public Person getPerson(@PathVariable String id) {
+		return personService.getPerson(id);
+	}
+}
