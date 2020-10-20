@@ -1,7 +1,7 @@
 
 app.post('/login', function(request, response) {
-	var username = request.body.usuario;
-    var password = request.body.password;
+	var username = request.body.user;
+    var password = request.body.pass;
     
 	if (username && password) {
 		connection().query('SELECT * FROM usuarios WHERE username = ? AND password = ?', [username, password], (error, results, fields)=>{
